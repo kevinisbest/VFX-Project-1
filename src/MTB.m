@@ -1,3 +1,4 @@
+% Using Median Threshold Bitmap to align the images
 function [shift_result] = MTB(g_img1, g_img2, level, shift_result)
     
     shift_tmp = zeros(1,2);
@@ -36,6 +37,7 @@ function [shift_result] = MTB(g_img1, g_img2, level, shift_result)
             else
                 EBitmap1(i, j) = 1;
             end
+            
             % g_img2
             if g_img2(i, j) < Threshold_2 
                 TBitmap2(i, j) = 0;
