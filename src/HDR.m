@@ -6,8 +6,9 @@ function HDR(folder, level)
     disp(ln_T);
     
 %     disp(size(images(1)));
-    
+
     disp('-----MTB image alignment.-----');
+    
     for i = 1:numbers-1
         shift = zeros(1,2);
         shift_result = zeros(1,2);
@@ -33,7 +34,7 @@ function HDR(folder, level)
 	weight = min(weight, 255-weight);
     weight = weight/max(weight);% ¤W½Ò hat weighting function
 
-    lambda = 30;
+    lambda = 500;
     for channel = 1:3
         rsimages = reshape(simages(:,:,channel,:), small_row*small_col, numbers);
         [g(:,channel), ln_E(:,channel)] = gsolve(rsimages, ln_T, lambda, weight);
@@ -42,5 +43,25 @@ function HDR(folder, level)
     disp('-----constructing HDR radiance map.-----');
     imgHDR = hdrDebevec(images, g, ln_T, weight);
     hdrwrite(imgHDR, 'hdr.hdr');
+    
+    disp('-----tone mapping.-----')
+    type_ = 'local';
+    alpha_ = 0.8;
+    delta_ = 1e-6;
+    white_ = 100;
+    phi = 8.0;
+    epsilon = 0.05;
+    
+	prefix = 'img';
+    
+    
+    imgTMO = tmoReinhard02(imgHDR, type_, alpha_, delta_, white_, phi, epsilon);
+    %imgTMO = KimKautzConsistentTMO(imgHDR);
+    %imgTMO = ToneMapping(imgHDR,delta_,alpha_,white_);
+    %imgTMO = bfltColor(imgHDR,5,3,0.1);
+    %imgTMO = tmoReinhard02(hdr, type_, alpha_, delta_, white_, phi, epsilon);
+    write_rgbe(imgTMO, [prefix '_tone_mapped.hdr']);
+    imwrite(imgTMO, [prefix '_tone_mapped.png']);
+    
     disp('Done!')
 end

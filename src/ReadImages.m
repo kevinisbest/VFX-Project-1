@@ -5,7 +5,7 @@ function [g_images, images, exposureTimes] = ReadImages(folder, extension)
     g_images = [];
     
     if( ~exist('extension') )
-	extension = 'jpg';
+	extension = 'jpeg';
     end
 
     files = dir([folder, '/*.', extension]);%read .jpg files
