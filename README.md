@@ -6,4 +6,5 @@ Download all files and use Matlab to execute HDR.m
 $ HDR(IMAGES DIR HERE, LEVEL)
 ```
 # Result
-![](https://github.com/kevinisbest/VFX-Project-1/blob/master/tone%20mapping%20result/R06922106_R06946009_artifact_2.png)
+
+![](https://github.com/kevinisbest/VFX-Project-1/blob/master/tone-mapping-result/R06922106_R06946009_artifact_2.png)
